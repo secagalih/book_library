@@ -1,7 +1,7 @@
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import bcrypt from 'bcrypt';
 
-// Create mock objects
+
 const mockDb = {
   oneOrNone: jest.fn(),
   one: jest.fn()
@@ -9,7 +9,7 @@ const mockDb = {
 
 const mockGenerateToken = jest.fn();
 
-// Mock the modules
+
 jest.unstable_mockModule('../../config/database.js', () => ({
   db: mockDb
 }));
@@ -18,7 +18,6 @@ jest.unstable_mockModule('../../utils/generateToken.js', () => ({
   generateToken: mockGenerateToken
 }));
 
-// Import after mocking
 const { register, login, logout, getUser, getTotalUsers } = await import('../../controller/authController.js');
 const db = mockDb;
 const generateToken = mockGenerateToken;
@@ -56,7 +55,7 @@ describe('Auth Controller', () => {
         email: 'john@example.com'
       };
 
-      db.oneOrNone.mockResolvedValue(null); // User doesn't exist
+      db.oneOrNone.mockResolvedValue(null); 
       db.one.mockResolvedValue(mockUser);
       generateToken.mockReturnValue('mock-token');
 
@@ -112,10 +111,9 @@ describe('Auth Controller', () => {
 
       await register(mockReq, mockRes);
 
-      // Check that db.one was called with a hashed password
       const insertCall = db.one.mock.calls[0];
       expect(insertCall[1][2]).not.toBe('plaintext');
-      expect(insertCall[1][2].length).toBeGreaterThan(20); // Bcrypt hash length
+      expect(insertCall[1][2].length).toBeGreaterThan(20); 
     });
   });
 

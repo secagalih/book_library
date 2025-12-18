@@ -47,7 +47,7 @@ describe('generateToken Utility', () => {
       expect.any(String),
       expect.objectContaining({
         httpOnly: true,
-        secure: true, // true in test environment (not 'development')
+        secure: true, 
         sameSite: 'strict',
         maxAge: 7 * 24 * 60 * 60 * 1000
       })

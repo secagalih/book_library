@@ -1,17 +1,17 @@
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import jwt from 'jsonwebtoken';
 
-// Create mock functions
+
 const mockDb = {
   oneOrNone: jest.fn()
 };
 
-// Mock the database module
+
 jest.unstable_mockModule('../../config/database.js', () => ({
   db: mockDb
 }));
 
-// Import after mocking
+
 const { default: authMiddleware } = await import('../../middleware/authMiddleware.js');
 const db = mockDb;
 
