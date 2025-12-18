@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model User{
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  borrowings Borrowing[]
+}
+
+model Book {
+  id        String   @id @default(uuid())
+  title     String
+  author    String
+  isbn      String   @unique
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  borrowings Borrowing[]
+}
+
+model Borrowing { 
+  id        String   @id @default(uuid())
+  userId    String
+  bookId    String
+  borrowedAt DateTime @default(now())
+  dueDate    DateTime
+  returnedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  borrowingStatus BorrowingStatus @default(BORROWED)
+
+  user User @relation(fields: [userId], references: [id] , onDelete: Cascade)
+  book Book @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+}
+
+enum BorrowingStatus {
+ BORROWED
+ RETURNED
+ OVERDUE
+ LOST
+}
