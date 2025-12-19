@@ -26,7 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     try {
       const userData = await getCurrentUser();
-      setUser(userData?.data?.user ?? null);
+      setUser(userData?.data?.user as User ?? null);
     } catch (error) {
       console.error('Failed to refresh user:', error);
       setUser(null);

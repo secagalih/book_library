@@ -112,8 +112,6 @@ export const BookApi = {
   updateBook: (id: string, book: UpdateBookRequest): AxiosPromise<UpdateBookResponse> => 
     apiClient.post<UpdateBookResponse>(`/books/update/${id}`, book),
   
-  deleteBook: (id: string): AxiosPromise<DeleteBookResponse> => 
-    apiClient.post<DeleteBookResponse>(`/books/delete/${id}`),
   
   getTotalBooks: (): AxiosPromise<TotalBooksResponse> => 
     apiClient.get<TotalBooksResponse>('/books/total-books'),
@@ -131,10 +129,7 @@ export const BorrowingApi = {
   
   updateBorrowing: (borrowing: UpdateBorrowingRequest): AxiosPromise<UpdateBorrowingResponse> => 
     apiClient.post<UpdateBorrowingResponse>(`/borrowings/update`, borrowing),
-  
-  deleteBorrowing: (id: string): AxiosPromise<DeleteBorrowingResponse> => 
-    apiClient.post<DeleteBorrowingResponse>(`/borrowings/delete/${id}`),
-  
+    
   getTotalBorrowings: (): AxiosPromise<TotalBorrowingsResponse> => 
     apiClient.get<TotalBorrowingsResponse>('/borrowings/total-borrowings'),
 }

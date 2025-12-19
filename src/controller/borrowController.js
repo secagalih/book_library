@@ -76,18 +76,6 @@ const updateBorrowing = async (req, res) => {
     message: 'Borrowing updated successfully'
   })
 }
-const deleteBorrowing = async (req, res) => {
-  const { id } = req.params;
-  const checkId = await db.oneOrNone('SELECT * FROM "Borrowing" WHERE "id" = $1', [id]);
-  if (!checkId) {
-    return res.status(400).json({ message: 'Borrowing not found' });
-  }
-  await db.one('DELETE FROM "Borrowing" WHERE "id" = $1 RETURNING *', [id]);
-  res.status(201).json({
-    status: 'success',
-    message: 'Borrowing deleted successfully'
-  })
-}
 
 const getTotalBorrowings = async (req, res) => {
   const totalBorrowings = await db.one('SELECT COUNT(*) FROM "Borrowing"');
@@ -101,4 +89,4 @@ const getTotalBorrowings = async (req, res) => {
 
 
 
-export { getBorrowings, addBorrowing, updateBorrowing, deleteBorrowing, getTotalBorrowings };
+export { getBorrowings, addBorrowing, updateBorrowing, getTotalBorrowings };

@@ -11,19 +11,21 @@ const authMiddleware = async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
     }
     if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
+      return res.status(401).json({
+        status:'error',
+        message: 'Unauthorized' });
     }
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await db.oneOrNone('SELECT * FROM "User" WHERE "id" = $1', [decoded.id]);
       if (!user) {
-        return res.status(401).json({ message: 'User not found' });
+        return res.status(401).json({ status:'error', message: 'User not found' });
       }
       req.user = user;
       next();
     } catch (error) {
-      return res.status(401).json({ message: 'Not Authorized, Invalid Token' });
+      return res.status(401).json({ status:'error', message: 'Not Authorized, Invalid Token' });
     }
 
   }

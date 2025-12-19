@@ -108,18 +108,6 @@ const updateBook = async (req, res) => {
     message: 'Book updated successfully'
   })
 }
-const deleteBook = async (req, res) => {
-  const { id } = req.params;
-  const checkId = await db.oneOrNone('SELECT * FROM "Book" WHERE "id" = $1', [id]);
-  if (!checkId) {
-    return res.status(400).json({ status: 'error', message: 'Book not found' });
-  }
-  await db.one('DELETE FROM "Book" WHERE "id" = $1 RETURNING *', [id]);
-  res.status(201).json({
-    status: 'success',
-    message: 'Book deleted successfully'
-  })
-}
 
 const getTotalBooks = async (req, res) => {
   const totalBooks = await db.one('SELECT SUM("quantity") As total FROM "Book"');
@@ -133,4 +121,4 @@ const getTotalBooks = async (req, res) => {
   })
 }
 
-export { getBooks, addBook, updateBook, deleteBook, getTotalBooks };
+export { getBooks, addBook, updateBook, getTotalBooks };
